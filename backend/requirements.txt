@@ -2,10 +2,7 @@ fastapi[standard]
 pydantic
 pydantic-settings
 python-dotenv
-sqlalchemy
-sqlmodel
-alembic
-psycopg[binary,pool]
-passlib[bcrypt]
-bcrypt
-pyjwt
+httpx
+beautifulsoup4
+lxml
+openai
