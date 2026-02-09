@@ -15,7 +15,7 @@ type ExtractDataResponse = {
 const extractData = async (
   request: ExtractDataRequest,
 ): Promise<ExtractDataResponse> => {
-  const response = await api.post<ExtractDataResponse>("/", request);
+  const response = await api.post<ExtractDataResponse>("/extract/", request);
   return response.data;
 };
 
