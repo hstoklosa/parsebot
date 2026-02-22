@@ -1,22 +1,20 @@
-FROM python:3.14-slim
+FROM python:3.13-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# The output streams are sent straight to terminal.
-# REF: https://stackoverflow.com/a/59812588/13910414
 ENV PYTHONDONTWRITEBYTECODE=1
-
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
 ENV VIRTUAL_ENV=/app/venv
-RUN python3 -m venv $VIRTUAL_ENV
+RUN uv venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH" 
 
 COPY requirements.txt /app
 
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --upgrade -r /app/requirements.txt
-
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv pip install --no-cache -r /app/requirements.txt
+    
 COPY ./app /app/app
 
 EXPOSE 8000
